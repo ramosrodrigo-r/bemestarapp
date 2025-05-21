@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [CheckInEntity::class], version = 1)
+@Database(entities = [CheckEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun checkInDao(): CheckInDao
+    abstract fun checkInDao(): CheckDao
 
     companion object {
         @Volatile
@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "checkin_database"
+                    "check_database"
                 ).build()
                 INSTANCE = instance
                 instance

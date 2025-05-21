@@ -1,6 +1,6 @@
 package br.com.rodrigo.bemestarapp.domain.model
 
-data class CheckIn(
+data class Check(
     val id: Int = 0,
     val date: String,
     val mood: Int,

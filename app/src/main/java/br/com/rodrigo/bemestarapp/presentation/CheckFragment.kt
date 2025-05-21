@@ -4,24 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.rodrigo.bemestarapp.R
-import br.com.rodrigo.bemestarapp.databinding.FragmentCheckInBinding
-import br.com.rodrigo.bemestarapp.domain.model.CheckIn
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModel
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModelFactory
+import br.com.rodrigo.bemestarapp.databinding.FragmentCheckBinding
+import br.com.rodrigo.bemestarapp.domain.model.Check
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModel
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class CheckInFragment : Fragment() {
 
-    private var _binding: FragmentCheckInBinding? = null
+class CheckFragment : Fragment() {
+
+    private var _binding: FragmentCheckBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CheckInViewModel by viewModels {
-        CheckInViewModelFactory(requireContext())
+    private val viewModel: CheckViewModel by viewModels {
+        CheckViewModelFactory(requireContext())
     }
 
     private var selectedMood: Int = 0
@@ -30,7 +33,7 @@ class CheckInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCheckInBinding.inflate(inflater, container, false)
+        _binding = FragmentCheckBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -67,9 +70,11 @@ class CheckInFragment : Fragment() {
             val motivation = binding.seekMotivation.progress
             val focus = binding.seekFocus.progress
             val support = binding.seekSupport.progress
+            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-            val checkIn = CheckIn(
+            val check = Check(
                 id = 0,
+                date = currentDate,
                 mood = selectedMood,
                 note = note,
                 motivation = motivation,
@@ -77,7 +82,7 @@ class CheckInFragment : Fragment() {
                 support = support
             )
 
-            viewModel.insertCheckIn(checkIn)
+            viewModel.insertCheckIn(check)
             Toast.makeText(requireContext(), "Check-in salvo com sucesso!", Toast.LENGTH_SHORT).show()
         }
 
@@ -85,6 +90,7 @@ class CheckInFragment : Fragment() {
             findNavController().navigate(R.id.action_checkInFragment_to_tipFragment)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

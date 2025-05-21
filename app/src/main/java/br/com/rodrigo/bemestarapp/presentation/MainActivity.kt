@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import br.com.rodrigo.bemestarapp.data.local.AppDatabase
 import br.com.rodrigo.bemestarapp.data.remote.RetrofitClient
-import br.com.rodrigo.bemestarapp.domain.repository.CheckInRepository
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModel
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModelFactory
-import br.com.rodrigo.bemestarapp.domain.model.CheckIn
+import br.com.rodrigo.bemestarapp.domain.repository.CheckRepository
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModel
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModelFactory
+import br.com.rodrigo.bemestarapp.domain.model.Check
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var checkInViewModel: CheckInViewModel
+    private lateinit var checkViewModel: CheckViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         val dao = AppDatabase.getInstance(applicationContext).checkInDao()
         val api = RetrofitClient.api
-        val repository = CheckInRepository(dao, api)
-        val factory = CheckInViewModelFactory(repository)
-        checkInViewModel = ViewModelProvider(this, factory)[CheckInViewModel::class.java]
+        val repository = CheckRepository(dao, api)
+        val factory = CheckViewModelFactory(this) // ✅ correto
+        checkViewModel = ViewModelProvider(this, factory)[CheckViewModel::class.java]
 
 
         binding.fab.setOnClickListener { view ->
-            val checkIn = CheckIn(
+            val check = Check(
                 date = "2025-05-21",
                 mood = 2,
                 note = "Hoje me senti bem concentrado.",
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 support = 3
             )
 
-            checkInViewModel.insertCheckIn(checkIn)
+            checkViewModel.insertCheckIn(check)
 
             Snackbar.make(view, "Check-in salvo com sucesso!", Snackbar.LENGTH_SHORT)
                 .setAnchorView(R.id.fab).show()

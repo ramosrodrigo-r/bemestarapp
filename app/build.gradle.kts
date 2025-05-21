@@ -83,6 +83,8 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
+
+
     // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

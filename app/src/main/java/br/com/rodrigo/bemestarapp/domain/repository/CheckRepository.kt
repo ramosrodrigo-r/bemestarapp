@@ -1,21 +1,21 @@
 package br.com.rodrigo.bemestarapp.domain.repository
 
-import br.com.rodrigo.bemestarapp.data.local.CheckInDao
-import br.com.rodrigo.bemestarapp.data.remote.CheckInApi
+import br.com.rodrigo.bemestarapp.data.local.CheckDao
+import br.com.rodrigo.bemestarapp.data.remote.CheckApi
 import br.com.rodrigo.bemestarapp.util.toDomain
 import br.com.rodrigo.bemestarapp.util.toEntity
-import br.com.rodrigo.bemestarapp.domain.model.CheckIn
+import br.com.rodrigo.bemestarapp.domain.model.Check
 import br.com.rodrigo.bemestarapp.domain.model.Tip
 
-class CheckInRepository(
-    private val dao: CheckInDao,
-    private val api: CheckInApi
+class CheckRepository(
+    private val dao: CheckDao,
+    private val api: CheckApi
 ) {
-    suspend fun insertCheckIn(checkIn: CheckIn) {
-        dao.insert(checkIn.toEntity())
+    suspend fun insertCheckIn(check: Check) {
+        dao.insert(check.toEntity())
     }
 
-    suspend fun getWeeklyCheckIns(): List<CheckIn> =
+    suspend fun getWeeklyCheckIns(): List<Check> =
         dao.getWeeklyCheckIns().map { it.toDomain() }
 
     suspend fun checkForNegativeStreak(): Boolean =

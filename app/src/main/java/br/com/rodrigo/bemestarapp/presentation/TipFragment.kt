@@ -5,38 +5,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import br.com.rodrigo.bemestarapp.databinding.FragmentSecondBinding
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModel
-import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckInViewModelFactory
-import br.com.rodrigo.bemestarapp.data.local.AppDatabase
-import br.com.rodrigo.bemestarapp.data.remote.RetrofitClient
-import br.com.rodrigo.bemestarapp.domain.repository.CheckInRepository
-import android.util.Log
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import br.com.rodrigo.bemestarapp.databinding.FragmentTipBinding
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModel
+import br.com.rodrigo.bemestarapp.presentation.viewmodel.CheckViewModelFactory
+import br.com.rodrigo.bemestarapp.R
 
+class TipFragment : Fragment() {
 
+    private var _binding: FragmentTipBinding? = null
+    private val binding get() = _binding!!
 
+    private val viewModel: CheckViewModel by viewModels {
+        CheckViewModelFactory(requireContext())
+    }
 
-class SecondFragment : Fragment() {
-
-    private lateinit var viewModel: CheckInViewModel
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTipBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        observeTip()
+        viewModel.loadTips() // <- troca aqui
 
-        val repository = CheckInRepository(
-            AppDatabase.getInstance(requireContext()).checkInDao(),
-            RetrofitClient.api
-        )
-        viewModel = ViewModelProvider(this, CheckInViewModelFactory(repository))[CheckInViewModel::class.java]
-
-        viewModel.loadWeeklyData()
-
-        viewModel.weeklyData.observe(viewLifecycleOwner) { checkIns ->
-            // Aqui você pode alimentar um gráfico com MPAndroidChart ou outro componente de visualização
-            for (checkIn in checkIns) {
-                Log.d("CheckIn", "Data: ${checkIn.date}, Humor: ${checkIn.mood}")
-            }
+        binding.btnBackToCheckIn.setOnClickListener {
+            findNavController().navigate(R.id.action_tipFragment_to_checkInFragment)
         }
     }
+
+
+    private fun observeTip() {
+        viewModel.tip.observe(viewLifecycleOwner) { tip ->
+            binding.tipMessage.text = tip?.message ?: "Nenhuma dica disponível no momento."
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
+

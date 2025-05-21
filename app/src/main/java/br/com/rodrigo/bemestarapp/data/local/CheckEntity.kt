@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "checkin")
-data class CheckInEntity(
+data class CheckEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val date: String,
     val mood: Int,

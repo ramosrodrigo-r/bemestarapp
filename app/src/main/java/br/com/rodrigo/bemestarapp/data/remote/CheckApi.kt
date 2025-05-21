@@ -4,7 +4,7 @@ import br.com.rodrigo.bemestarapp.domain.model.Tip
 import retrofit2.http.GET
 
 
-interface CheckInApi {
+interface CheckApi {
     @GET("tips")
     suspend fun getTips(): List<Tip>
 
