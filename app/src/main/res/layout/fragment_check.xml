@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/checkInLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/checkInTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Como você está se sentindo hoje?"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp" />
+
+        <!-- Botões de humor -->
+        <LinearLayout
+            android:id="@+id/moodButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button android:id="@+id/btn_mood_1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="😢"/>
+            <Button android:id="@+id/btn_mood_2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="🙁"/>
+            <Button android:id="@+id/btn_mood_3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="😐"/>
+            <Button android:id="@+id/btn_mood_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="🙂"/>
+            <Button android:id="@+id/btn_mood_5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="😄"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editObservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Escreva algo (opcional)"
+            android:minHeight="100dp"
+            android:background="@android:drawable/editbox_background" />
+
+        <!-- Motivação -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nível de motivação"
+            android:layout_marginTop="24dp"/>
+        <SeekBar
+            android:id="@+id/seekMotivation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5"/>
+
+        <!-- Foco -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nível de foco"
+            android:layout_marginTop="16dp"/>
+        <SeekBar
+            android:id="@+id/seekFocus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5"/>
+
+        <!-- Apoio -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quanto apoio você sentiu hoje?"
+            android:layout_marginTop="16dp"/>
+        <SeekBar
+            android:id="@+id/seekSupport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5"/>
+
+        <!-- Botões de ação -->
+        <Button
+            android:id="@+id/btnSaveCheckIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar Check-in"
+            android:layout_marginTop="24dp"/>
+
+        <Button
+            android:id="@+id/btnGoToTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver dica emocional"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView>

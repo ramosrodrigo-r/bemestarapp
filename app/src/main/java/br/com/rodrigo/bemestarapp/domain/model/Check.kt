@@ -7,5 +7,5 @@ data class CheckIn(
     val note: String?,
     val motivation: Int,
     val focus: Int,
-    val support: Int
+    val support: Int,
 )
